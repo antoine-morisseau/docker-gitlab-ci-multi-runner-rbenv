@@ -1,5 +1,5 @@
 FROM sameersbn/gitlab-ci-multi-runner:latest
-MAINTAINER Denis Gladkikh <docker@denis.gladkikh.email>
+MAINTAINER Antoine Morisseau <antoine@morisseau.me>
 
 RUN apt-get update
 
@@ -39,8 +39,8 @@ RUN apt-get install -y --no-install-recommends \
 		xz-utils \
 		zlib1g-dev
 
-RUN git clone https://github.com/sstephenson/rbenv.git ${GITLAB_CI_MULTI_RUNNER_HOME_DIR}/.rbenv
-RUN git clone https://github.com/sstephenson/ruby-build.git ${GITLAB_CI_MULTI_RUNNER_HOME_DIR}/.rbenv/plugins/ruby-build
+RUN git clone https://github.com/rbenv/rbenv.git ${GITLAB_CI_MULTI_RUNNER_HOME_DIR}/.rbenv
+RUN git clone https://github.com/rbenv/ruby-build.git ${GITLAB_CI_MULTI_RUNNER_HOME_DIR}/.rbenv/plugins/ruby-build
 
 RUN echo 'export PATH="$HOME/.rbenv/bin:$PATH"\neval "$(rbenv init -)"' > ${GITLAB_CI_MULTI_RUNNER_HOME_DIR}/.bashrc
 
@@ -52,7 +52,7 @@ ENV LC_ALL en_US.UTF-8
 ENV LANG en_US.UTF-8
 
 ENV RUNNER_DESCRIPTION=ruby
-ENV RUNNER_DESCRIPTION=shell
+ENV RUNNER_EXECUTOR=shell
 ENV RUNNER_TAG_LIST=ruby
 ENV RUNNER_LIMIT=1
 
