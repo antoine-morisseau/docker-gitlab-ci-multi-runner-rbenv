@@ -1,6 +1,6 @@
-# Docker image with gitlab-ci-multi-runner to run builds with ruby
+# Docker image with gitlab-ci-multi-runner to run builds with rbenv
 
-Docker image with gitlab-ci-multi-runner, which can run ruby builds. It uses [rbenv](https://github.com/sstephenson/rbenv) to manage ruby versions.
+Docker image with gitlab-ci-multi-runner, which can run ruby builds thanks to [rbenv](https://github.com/sstephenson/rbenv) integration.
 
 ## How to use
 
@@ -13,11 +13,11 @@ vrunner:
         - /home/gitlab_ci_multi_runner/data
 
 runner:
-    image: outcoldman/gitlab-ci-multi-runner-ruby:latest
+    image: amorisseau/gitlab-ci-multi-runner-rbenv:latest
     volumes_from:
         - vrunner
     environment:
-        - CI_SERVER_URL=https://gitlabci.example.com
+        - CI_SERVER_URL=https://gitlabci.example.com/ci
         - RUNNER_TOKEN=YOUR_TOKEN_FROM_GITLABCI
     restart: always
 ```
@@ -33,24 +33,25 @@ docker-compose up -d
 Or using docker command line
 
 ```
-docker run -d --env "CI_SERVER_URL=https://gitlabci.example.com" \
+docker run -d --env "CI_SERVER_URL=https://gitlabci.example.com/ci" \
               --env "RUNNER_TOKEN=YOUR_TOKEN_FROM_GITLABCI" \
               --restart="always" \
               --name=ruby_runner \
-              outcoldman/gitlab-ci-multi-runner-ruby:latest
+              amorisseau/gitlab-ci-multi-runner-rbenv:latest
 ```
 
 In your project add `.gitlab-ci.yml`
 
 ```
 before_script:
-    - RBENV_VERSION=2.0.0-p645 rbenv install -s
-    - RBENV_VERSION=2.0.0-p645 rbenv exec gem install bundle
-    - RBENV_VERSION=2.0.0-p645 rbenv exec bundle install
+    - RBENV_VERSION=2.0.0-p645
+    - rbenv install -s 2.0.0-p645
+    - rbenv exec gem install bundle
+    - rbenv exec bundle install
 
 build:
     script:
-        - RBENV_VERSION=2.0.0-p645 rbenv ruby --version
+        - rbenv ruby --version
     tags:
         - ruby
 ```
@@ -62,6 +63,6 @@ build:
 ## More information
 
 * Read about [gitlab-ci-multi-runner](https://gitlab.com/gitlab-org/gitlab-ci-multi-runner/) to learn how integration works with GitLab CI.
-* This image is using [rbenv](https://github.com/sstephenson/rbenv) to maintain multilpe ruby versions. You can find other way how you can control ruby version, like instead of `RBENV_VERSION` you can use `.ruby-version` file.
-* This image is using [ruby-build](https://github.com/sstephenson/ruby-build) to build ruby versions.
+* This image is using [rbenv](https://github.com/rbenv/rbenv) to maintain multilpe ruby versions. You can find other way how you can control ruby version, like instead of `RBENV_VERSION` you can use `.ruby-version` file.
+* This image is using [ruby-build](https://github.com/rbenv/ruby-build) to build ruby versions.
 * This image is based on [docker-gitlab-ci-multi-runner](https://github.com/sameersbn/docker-gitlab-ci-multi-runner), which handles registration and startup.
