@@ -57,4 +57,4 @@ ENV RUNNER_EXECUTOR=shell
 ENV RUNNER_TAG_LIST=ruby
 ENV RUNNER_LIMIT=1
 
-gitlab-runner register
+RUN gitlab-runner register
