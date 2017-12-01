@@ -1,4 +1,4 @@
-FROM sameersbn/gitlab-ci-multi-runner:latest
+FROM digitallumberjack/docker-gitlab-ci-multi-runner:latest
 MAINTAINER Antoine Morisseau <antoine@morisseau.me>
 
 RUN apt-get update
