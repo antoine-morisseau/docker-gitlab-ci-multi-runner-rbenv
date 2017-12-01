@@ -10,19 +10,18 @@ Example of [Docker Compose](https://docs.docker.com/compose/) file (`docker-comp
 vrunner:
   image: busybox
     volumes:
-        - /home/gitlab_ci_multi_runner/data
-
+        - /home
 runner:
     image: amorisseau/gitlab-ci-multi-runner-rbenv:latest
     volumes_from:
         - vrunner
     environment:
         - CI_SERVER_URL=https://gitlabci.example.com/ci
-        - RUNNER_TOKEN=YOUR_TOKEN_FROM_GITLABCI
+        - REGISTRATION_TOKEN=YOUR_TOKEN_FROM_GITLABCI
     restart: always
 ```
 
-Replace `CI_SERVER_URL` and `RUNNER_TOKEN`.
+Replace `CI_SERVER_URL` and `REGISTRATION_TOKEN`.
 
 Run it
 
@@ -34,7 +33,7 @@ Or using docker command line
 
 ```
 docker run -d --env "CI_SERVER_URL=https://gitlabci.example.com/ci" \
-              --env "RUNNER_TOKEN=YOUR_TOKEN_FROM_GITLABCI" \
+              --env "REGISTRATION_TOKEN=YOUR_TOKEN_FROM_GITLABCI" \
               --restart="always" \
               --name=ruby_runner \
               amorisseau/gitlab-ci-multi-runner-rbenv:latest
@@ -62,7 +61,7 @@ build:
 
 ## More information
 
-* Read about [gitlab-ci-multi-runner](https://gitlab.com/gitlab-org/gitlab-ci-multi-runner/) to learn how integration works with GitLab CI.
+* Read about [gitlab-runner](https://docs.gitlab.com/runner/) to learn how integration works with GitLab CI.
 * This image is using [rbenv](https://github.com/rbenv/rbenv) to maintain multilpe ruby versions. You can find other way how you can control ruby version, like instead of `RBENV_VERSION` you can use `.ruby-version` file.
 * This image is using [ruby-build](https://github.com/rbenv/ruby-build) to build ruby versions.
-* This image is based on [docker-gitlab-ci-multi-runner](https://github.com/sameersbn/docker-gitlab-ci-multi-runner), which handles registration and startup.
+* all the command about `gitlab-runner register` are available [here](gitlab-runner-register-commands.md)
