@@ -1,4 +1,4 @@
-FROM digitallumberjack/docker-gitlab-ci-multi-runner:latest
+FROM gitlab/gitlab-runner:latest
 MAINTAINER Antoine Morisseau <antoine@morisseau.me>
 
 RUN apt-get update
@@ -39,22 +39,22 @@ RUN apt-get install -y --no-install-recommends \
 		xz-utils \
 		zlib1g-dev
 
-RUN git clone https://github.com/rbenv/rbenv.git ${GITLAB_CI_MULTI_RUNNER_HOME_DIR}/.rbenv
-RUN git clone https://github.com/rbenv/ruby-build.git ${GITLAB_CI_MULTI_RUNNER_HOME_DIR}/.rbenv/plugins/ruby-build
+RUN git clone https://github.com/rbenv/rbenv.git ${HOME}/.rbenv
+RUN git clone https://github.com/rbenv/ruby-build.git ${HOME}/.rbenv/plugins/ruby-build
 
-RUN echo 'export PATH="$HOME/.rbenv/bin:$PATH"\neval "$(rbenv init -)"' > ${GITLAB_CI_MULTI_RUNNER_HOME_DIR}/.bashrc
-
-RUN chown -R ${GITLAB_CI_MULTI_RUNNER_USER}:${GITLAB_CI_MULTI_RUNNER_USER} ${GITLAB_CI_MULTI_RUNNER_HOME_DIR}
+RUN echo 'export PATH="$HOME/.rbenv/bin:$PATH"\neval "$(rbenv init -)"' > ${HOME}/.bashrc
 
 RUN locale-gen en_US.UTF-8
 
 ENV LC_ALL en_US.UTF-8
 ENV LANG en_US.UTF-8
 
-ENV RUNNER_DESCRIPTION=ruby
+ENV REGISTER_NON_INTERACTIVE=true
+ENV REGISTRATION_TOKEN=
+ENV CI_SERVER_URL=
+ENV RUNNER_NAME=ruby
 ENV RUNNER_EXECUTOR=shell
 ENV RUNNER_TAG_LIST=ruby
 ENV RUNNER_LIMIT=1
 
-ENV RUNNER_TOKEN=
-ENV CI_SERVER_URL=
+gitlab-runner register
