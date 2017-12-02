@@ -2,8 +2,8 @@ FROM gitlab/gitlab-runner:latest
 MAINTAINER Antoine Morisseau <antoine@morisseau.me>
 
 ENV GITLAB_RUNNER_VERSION=10.2.0 \
-    GITLAB_RUNNER_USER=gitlab_ci_multi_runner \
-    GITLAB_RUNNER_HOME_DIR="/home/gitlab_runner"
+    GITLAB_RUNNER_USER=gitlab_runner \
+    GITLAB_RUNNER_HOME_DIR="/home/${GITLAB_RUNNER_USER}"
 ENV GITLAB_RUNNER_DATA_DIR="${GITLAB_RUNNER_HOME_DIR}/data"
 
 RUN apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv E1DD270288B4E6030699E45FA1715D88E1DF1F24 \
