@@ -47,13 +47,6 @@ grant_access_to_docker_socket() {
   fi
 }
 
-configure_config_tom() {
-  if [[ ! -e ${GITLAB_RUNNER_DATA_DIR}/config.toml ]]; then
-      sudo -HEu ${GITLAB_RUNNER_USER} \
-        gitlab-ci-multi-runner register --config ${GITLAB_RUNNER_DATA_DIR}/config.toml
-  fi
-}
-
 configure_ci_runner() {
   if [[ ! -e ${GITLAB_RUNNER_DATA_DIR}/config.toml ]]; then
       sudo -HEu ${GITLAB_RUNNER_USER} \
@@ -76,7 +69,6 @@ if [[ -z ${1} ]]; then
   update_ca_certificates
   generate_ssh_deploy_keys
   grant_access_to_docker_socket
-  configure_config_toml
   configure_ci_runner
 
   start-stop-daemon --start \
