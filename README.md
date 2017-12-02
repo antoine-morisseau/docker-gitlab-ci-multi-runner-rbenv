@@ -10,7 +10,7 @@ Example of [Docker Compose](https://docs.docker.com/compose/) file (`docker-comp
 vrunner:
   image: busybox
     volumes:
-        - /home
+        - /home/gitlab-runner/data
 runner:
     image: amorisseau/gitlab-ci-multi-runner-rbenv:latest
     volumes_from:
