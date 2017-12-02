@@ -1,6 +1,23 @@
 FROM gitlab/gitlab-runner:latest
 MAINTAINER Antoine Morisseau <antoine@morisseau.me>
 
+ENV GITLAB_RUNNER_VERSION=10.2.0 \
+    GITLAB_RUNNER_USER=gitlab_ci_multi_runner \
+    GITLAB_RUNNER_HOME_DIR="/home/gitlab_runner"
+ENV GITLAB_RUNNER_DATA_DIR="${GITLAB_RUNNER_HOME_DIR}/data"
+
+RUN apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv E1DD270288B4E6030699E45FA1715D88E1DF1F24 \
+ && echo "deb http://ppa.launchpad.net/git-core/ppa/ubuntu trusty main" >> /etc/apt/sources.list \
+ && apt-get update \
+ && DEBIAN_FRONTEND=noninteractive apt-get install -y \
+      git-core openssh-client curl libapparmor1 \
+ && adduser --disabled-login --gecos 'GitLab CI Runner' ${GITLAB_RUNNER_USER} \
+ && sudo -HEu ${GITLAB_RUNNER_USER} ln -sf ${GITLAB_RUNNER_DATA_DIR}/.ssh ${GITLAB_RUNNER_HOME_DIR}/.ssh \
+ && rm -rf /var/lib/apt/lists/*
+
+COPY entrypoint.sh /sbin/entrypoint.sh
+RUN chmod 755 /sbin/entrypoint.sh
+
 RUN apt-get update
 
 # install build essentials
@@ -57,4 +74,6 @@ ENV RUNNER_EXECUTOR=shell
 ENV RUNNER_TAG_LIST=ruby
 ENV RUNNER_LIMIT=1
 
-RUN gitlab-runner register
+VOLUME ["${GITLAB_RUNNER_DATA_DIR}"]
+WORKDIR "${GITLAB_RUNNER_HOME_DIR}"
+ENTRYPOINT ["/sbin/entrypoint.sh"]
