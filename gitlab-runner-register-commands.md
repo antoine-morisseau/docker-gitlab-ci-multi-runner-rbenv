@@ -8,7 +8,7 @@ OPTIONS:
 
    --leave-runner                                        Don't remove runner if registration fails [$REGISTER_LEAVE_RUNNER]
 
-   -r value, --registration-token value                  Runner's registration token (default: "hbdu2e8BryQ_1zWpaN_U") [$REGISTRATION_TOKEN]
+   -r value, --registration-token value                  Runner's registration token (default: "token") [$REGISTRATION_TOKEN]
 
    --run-untagged                                        Register to run untagged builds; defaults to 'true' when 'tag-list' is empty [$REGISTER_RUN_UNTAGGED]
 
@@ -22,7 +22,7 @@ OPTIONS:
 
    --request-concurrency value                           Maximum concurrency for job requests (default: "0") [$RUNNER_REQUEST_CONCURRENCY]
 
-   -u value, --url value                                 Runner URL (default: "https://git.morisseau.me/") [$CI_SERVER_URL]
+   -u value, --url value                                 Runner URL (default: "https://gitlab.com/") [$CI_SERVER_URL]
 
    -t value, --token value                               Runner token [$CI_SERVER_TOKEN]
 
