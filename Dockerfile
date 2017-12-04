@@ -52,6 +52,7 @@ RUN apt-get install -y --no-install-recommends \
 		libxslt-dev \
 		libyaml-dev \
 		make \
+		nodejs \
 		patch \
 		xz-utils \
 		zlib1g-dev
