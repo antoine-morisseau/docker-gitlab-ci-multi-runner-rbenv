@@ -56,10 +56,12 @@ RUN apt-get install -y --no-install-recommends \
 		xz-utils \
 		zlib1g-dev
 
-RUN git clone https://github.com/rbenv/rbenv.git ${HOME}/.rbenv
-RUN git clone https://github.com/rbenv/ruby-build.git ${HOME}/.rbenv/plugins/ruby-build
+RUN git clone https://github.com/rbenv/rbenv.git ${GITLAB_RUNNER_HOME_DIR}/.rbenv
+RUN git clone https://github.com/rbenv/ruby-build.git ${GITLAB_RUNNER_HOME_DIR}/.rbenv/plugins/ruby-build
 
-RUN echo 'export PATH="$HOME/.rbenv/bin:$PATH"\neval "$(rbenv init -)"' > ${HOME}/.bashrc
+RUN echo 'export PATH="$HOME/.rbenv/bin:$PATH"\neval "$(rbenv init -)"' > ${GITLAB_RUNNER_HOME_DIR}/.bashrc
+
+RUN chown -R ${GITLAB_RUNNER_USER}:${GITLAB_RUNNER_USER} ${GITLAB_RUNNER_HOME_DIR}
 
 RUN locale-gen en_US.UTF-8
 
