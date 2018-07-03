@@ -1,4 +1,4 @@
-FROM gitlab/gitlab-runner:latest
+FROM gitlab/gitlab-runner:v10.2.0
 MAINTAINER Antoine Morisseau <antoine@morisseau.me>
 
 ENV GITLAB_RUNNER_VERSION=10.2.0 \
